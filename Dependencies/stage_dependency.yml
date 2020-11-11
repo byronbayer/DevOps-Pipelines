@@ -51,3 +51,5 @@ stages:
           - pwsh: |
               'Write-Host "Job a variable: $(job_a_variable)"'
               'Write-Host "Deployment a variable: $(deployment_a_variable)"'
+              'Write-Host "Job c variable: $(job_c_variable)"'
+              'Write-Host "Deployment c variable: $(deployment_c_variable)"'
