@@ -32,3 +32,7 @@ stages:
         variables:
           job_a_variable: $[ stageDependencies.stage_a.job_a.outputs['setvarStep.myOutputVar'] ]
           deployment_a_variable: $[ stageDependencies.stage_a.deployment_a.outputs['setvarStep.myOutputVar'] ]
+        steps:
+          - pwsh: |
+              'Write-Host "Job a variable: $(job_a_variable)"'
+              'Write-Host "Deployment a variable: $(deployment_a_variable)"'
