@@ -1,0 +1,27 @@
+trigger:
+  branches:
+    include:
+    - master
+stages:
+  - stage: stage_a
+    jobs:
+      - job: job_a
+        pool:
+          vmImage: 'vs2017-win2016'
+        steps:
+        - powershell: echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]stage_a, job_a value"
+          name: setvarStep
+        - script: echo $(setvarStep.myOutputVar)
+          name: echovar
+
+      - deployment: deployment_a
+        pool:
+          vmImage: 'ubuntu-16.04'
+        environment: env1
+        strategy:                  
+          runOnce:
+            deploy:
+              steps:
+              - bash: echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]stage_a, deployment_a value"
+                name: setvarStep
+              - bash: echo $(System.JobName)
