@@ -24,4 +24,11 @@ stages:
               steps:
               - bash: echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]stage_a, deployment_a value"
                 name: setvarStep
-              - bash: echo $(System.JobName)
+              - bash: echo $(setvarStep.myOutputVar)
+  - stage: stage_b
+    dependsOn: stage_a
+    jobs:
+      - job:
+        variables:
+          job_a_variable: $[ stageDependencies.stage_a.job_a.outputs['setvarStep.myOutputVar'] ]
+          deployment_a_variable: $[ stageDependencies.stage_a.deployment_a.outputs['setvarStep.myOutputVar'] ]
