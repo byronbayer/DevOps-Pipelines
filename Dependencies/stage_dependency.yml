@@ -21,13 +21,14 @@ stages:
               - pwsh: echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]stage_a, deployment_a value"
                 name: setvarStep
               - pwsh: echo $(setvarStep.myOutputVar)
+      
       - job: job_c
         dependsOn: 
         - job_a
         - deployment_a
         variables:
           job_a_variable: $[ dependencies.job_a.outputs['setvarStep.myOutputVar'] ]
-          deployment_a_variable: $[ dependencies.deployment_a.outputs['setvarStep.myOutputVar'] ]
+          deployment_a_variable: $[ dependencies.deployment_a.outputs['deployment_a.setvarStep.myOutputVar'] ]
         steps:
         - pwsh: |
             'Write-Host "job_a_variable: $(job_a_variable)"'
@@ -43,7 +44,7 @@ stages:
       - job:
         variables:
           job_a_variable: $[ stageDependencies.stage_a.job_a.outputs['setvarStep.myOutputVar'] ]
-          deployment_a_variable: $[ stageDependencies.stage_a.deployment_a.outputs['setvarStep.myOutputVar'] ]
+          deployment_a_variable: $[ stageDependencies.stage_a.deployment_a.outputs['deployment_a.setvarStep.myOutputVar'] ]
           job_c_variable: $[ stageDependencies.stage_a.job_c.outputs['setvarStep.job_a_variable'] ]
           deployment_c_variable: $[ stageDependencies.stage_c.job_c.outputs['setvarStep.deployment_a_variable'] ]
         steps:
