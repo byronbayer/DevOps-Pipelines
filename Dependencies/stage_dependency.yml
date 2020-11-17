@@ -13,6 +13,9 @@ stages:
           name: echovar
 
       - deployment: deployment_a
+        dependsOn: job_a
+        variables:
+          job_a_variable: $[ dependencies.job_a.outputs['setvarStep.myOutputVar'] ]
         environment: env1
         strategy:                  
           runOnce:
@@ -22,7 +25,10 @@ stages:
                 name: setvarStep
               - pwsh: echo $(setvarStep.myOutputVar)
                 name: echovar
-
+              - pwsh: |
+                  'Write-Host "job_a_variable: $(job_a_variable)"'
+                  'Write-Host "deployment_a_variable: $(deployment_a_variable)"'
+                name: Show variables
       
       - job: job_b
         dependsOn: 
