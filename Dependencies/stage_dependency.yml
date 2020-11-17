@@ -27,7 +27,6 @@ stages:
                 name: echovar
               - pwsh: |
                   'Write-Host "job_a_variable: $(job_a_variable)"'
-                  'Write-Host "deployment_a_variable: $(deployment_a_variable)"'
                 name: ShowVariables
       
       - job: job_b
