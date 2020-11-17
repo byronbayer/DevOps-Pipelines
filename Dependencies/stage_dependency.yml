@@ -28,7 +28,7 @@ stages:
               - pwsh: |
                   'Write-Host "job_a_variable: $(job_a_variable)"'
                   'Write-Host "deployment_a_variable: $(deployment_a_variable)"'
-                name: Show variables
+                name: ShowVariables
       
       - job: job_b
         dependsOn: 
@@ -41,7 +41,7 @@ stages:
         - pwsh: |
             'Write-Host "job_a_variable: $(job_a_variable)"'
             'Write-Host "deployment_a_variable: $(deployment_a_variable)"'
-          name: Show variables
+          name: ShowVariables
           
         - pwsh: | 
             echo "##vso[task.setvariable variable=job_a_variable;isOutput=true]$(job_a_variable)"
@@ -63,5 +63,5 @@ stages:
               'Write-Host "Deployment a variable: $(deployment_a_variable)"'
               'Write-Host "Job b job a variable: $(job_b_variable)"'
               'Write-Host "Job b Deployment a variable: $(deployment_a_variable)"'
-            name: Show variables
+            name: ShowVariables
             
