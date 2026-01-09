@@ -4,10 +4,10 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-22.04
 
 steps:
 - script: echo Hello, world!
